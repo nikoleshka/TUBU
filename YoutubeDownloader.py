@@ -71,8 +71,10 @@ root.minsize(200, 200)
 root.maxsize(500, 500)
 
 # Shared Control Variables
-format_var = tk.StringVar()
-quality_var = tk.StringVar()
+format_var = tk.StringVar(value="none")
+
+quality_var = tk.StringVar(value="none")
+
 
 # Step 1
 step1 = tk.Frame(root,bg="red")
@@ -81,22 +83,24 @@ tk.Label(step1, text="Enter your YouTube link:", font=("Arial", 12),fg="white",b
 
 enterlink = tk.Entry(step1, width=50,bg="white",fg="red")
 enterlink.pack()
-tk.Button(step1, text="Next", command=go_to_step2).pack(pady=20)
+tk.Button(step1, text="Next", command=go_to_step2, fg="red",bg="white" , activebackground="red", activeforeground="white").pack(pady=20)
 
 # Step 2
 step2 = tk.Frame(root,bg="red")
 tk.Label(step2, text="Select format:", font=("Arial", 12),fg="white",bg="red").pack(pady=20)
-tk.Radiobutton(step2, text="MP4", variable=format_var, value="1").pack(anchor="w")
-tk.Radiobutton(step2, text="MP3", variable=format_var, value="2").pack(anchor="w")
-tk.Button(step2, text="Next", command=handle_format_choice).pack(pady=10)
+format_var.set("")
+tk.Radiobutton(step2, text="MP4",font=("Helvetica", 11,"bold"), variable=format_var, value="1", bg="red", fg="white",activebackground="red", activeforeground="white", indicatoron=True, selectcolor="black").pack(anchor="w")
+tk.Radiobutton(step2, text="MP3", variable=format_var,font=("Helvetica", 11,"bold"),bg="red", fg="white", value="2",activebackground="red", activeforeground="white",indicatoron=True, selectcolor="black").pack(anchor="w")
+tk.Button(step2, text="Next", activebackground="red" , activeforeground="white" , fg="red" , bg="white", command=handle_format_choice , width=60).pack(pady=10)
 
 # Step 3 (Quality selection)
-step3 = tk.Frame(root)
-tk.Label(step3, text="Select video quality:", font=("Arial", 12),fg="red",bg="white").pack(pady=20)
-tk.Radiobutton(step3, text="320p", variable=quality_var, value="1").pack(anchor="w")
-tk.Radiobutton(step3, text="480p", variable=quality_var, value="2").pack(anchor="w")
-tk.Radiobutton(step3, text="720p", variable=quality_var, value="3").pack(anchor="w")
-tk.Button(step3, text="Download", command=start_download).pack(pady=10)
+step3 = tk.Frame(root,bg="red")
+tk.Label(step3, text="Select video quality:", font=("Arial", 12,"bold"),fg="white",bg="red").pack(pady=20)
+quality_var.set("") 
+tk.Radiobutton(step3, text="320p", variable=quality_var,font=("Helvetica", 11,"bold"), bg="red", fg="white",activebackground="red", activeforeground="white", indicatoron=True, selectcolor="black", value="1").pack(anchor="w")
+tk.Radiobutton(step3, text="480p", variable=quality_var,font=("Helvetica", 11,"bold"), bg="red", fg="white",activebackground="red", activeforeground="white", value="2", indicatoron=True, selectcolor="black").pack(anchor="w")
+tk.Radiobutton(step3, text="720p", variable=quality_var,font=("Helvetica", 11,"bold"), value="3", bg="red", fg="white",activebackground="red", activeforeground="white",indicatoron=True, selectcolor="black").pack(anchor="w")
+tk.Button(step3, text="Download",activebackground="red" , activeforeground="white" , fg="red" , bg="white", command=start_download).pack(pady=10)
 
 # Start with step 1
 step1.pack()
