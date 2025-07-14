@@ -1,9 +1,11 @@
 from pytube import YouTube
 from moviepy import AudioFileClip
 import tkinter as tk
+import re
 from tkinter import messagebox, filedialog
 
 def downloader(UserLink, UserChoice, user_mp4_quality):
+    
     try:
         YT_obj = YouTube(UserLink)
     except Exception:
@@ -42,11 +44,16 @@ def start_download():
 
 
 def go_to_step2():
+    url=enterlink.get().strip()
+    if not url  or not re.search(r"(https?://)?(www\.)?(youtube\.com|youtu\.be)/", url):
+        messagebox.showerror("Input Error", "Please enter a valid YouTube link.")
+        return
     step1.pack_forget()
     step2.pack()
 
 
 def handle_format_choice():
+
     format_choice = format_var.get()
     step2.pack_forget()
     if format_choice == "1":
@@ -68,17 +75,17 @@ format_var = tk.StringVar()
 quality_var = tk.StringVar()
 
 # Step 1
-step1 = tk.Frame(root)
-tk.Label(step1, text="Welcome to TUBU", font=("Helvetica", 12),fg="white",activebackground="red", activeforeground="red").pack(pady=20)
-tk.Label(step1, text="Enter your YouTube link:", font=("Arial", 12),fg="white",activebackground="red", activeforeground="red").pack(pady=20)
+step1 = tk.Frame(root,bg="red")
+tk.Label(step1, text="Welcome to TUBU", font=("Helvetica", 12),fg="white",bg="red").pack(pady=20)
+tk.Label(step1, text="Enter your YouTube link:", font=("Arial", 12),fg="white",bg="red").pack(pady=20)
 
-enterlink = tk.Entry(step1, width=50)
+enterlink = tk.Entry(step1, width=50,bg="white",fg="red")
 enterlink.pack()
 tk.Button(step1, text="Next", command=go_to_step2).pack(pady=20)
 
 # Step 2
-step2 = tk.Frame(root)
-tk.Label(step2, text="Select format:", font=("Arial", 12),fg="red",bg="white").pack(pady=20)
+step2 = tk.Frame(root,bg="red")
+tk.Label(step2, text="Select format:", font=("Arial", 12),fg="white",bg="red").pack(pady=20)
 tk.Radiobutton(step2, text="MP4", variable=format_var, value="1").pack(anchor="w")
 tk.Radiobutton(step2, text="MP3", variable=format_var, value="2").pack(anchor="w")
 tk.Button(step2, text="Next", command=handle_format_choice).pack(pady=10)
